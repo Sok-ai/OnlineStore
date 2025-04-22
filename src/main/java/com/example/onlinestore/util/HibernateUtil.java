@@ -4,6 +4,7 @@ import com.example.onlinestore.entity.Order;
 import com.example.onlinestore.entity.Product;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.service.spi.ServiceException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -39,14 +40,13 @@ public class HibernateUtil {
 
             // Построение SessionFactory
             return configuration.buildSessionFactory();
-        } catch (IOException ex) {
-            // Логирование ошибки
-            System.err.println("Failed to load application.properties" + ex);
-            throw new ExceptionInInitializerError(ex);
+        } catch (ServiceException e) {
+            throw new RuntimeException("Ошибка подключения к базе данных. Проверьте:\n"
+                    + "1. Запущен ли PostgreSQL\n"
+                    + "2. Правильность логина/пароля\n"
+                    + "3. Существование БД 'online_store'", e);
         } catch (Throwable ex) {
-            // Логирование ошибки
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
+            throw new RuntimeException("Фатальная ошибка инициализации Hibernate", ex);
         }
     }
 
