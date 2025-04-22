@@ -7,7 +7,6 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.spi.ServiceException;
 
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Properties;
 
 public class HibernateUtil {

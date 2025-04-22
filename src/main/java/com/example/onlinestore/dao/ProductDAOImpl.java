@@ -3,10 +3,8 @@ package com.example.onlinestore.dao;
 import com.example.onlinestore.entity.Product;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.UUID;
 
 public class ProductDAOImpl implements ProductDAO {
