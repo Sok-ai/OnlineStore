@@ -15,4 +15,6 @@ public interface OrderDAO {
     void removeOrder(Order order);
 
     void updateOrder(Order order);
+
+    List<Order> getAllOrders();
 }
