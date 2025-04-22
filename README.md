@@ -48,6 +48,7 @@ hibernate.connection.url=jdbc:postgresql://localhost:5432/online_store
 hibernate.connection.username=postgres
 hibernate.connection.password=ваш_пароль
 ````
+
 Замените ваш_пароль на ваш пароль PostgreSQL.
 
 3. Запуск приложения
@@ -68,5 +69,28 @@ hibernate.connection.password=ваш_пароль
 
 Или запустите класс Main из вашей IDE.
 
+## Пример JSON-файла с экспортированными заказами
+
+```
+[
+  {
+    "id": "90d74408-d297-42b3-81b9-a94f8cc3dbbb",
+    "customerName": "Никита",
+    "totalPrice": 70.82,
+    "products": [
+      {
+        "id": "e37787a1-f44a-49b3-9e66-ad67066172b1",
+        "name": "Кружка",
+        "price": 50.67
+      },
+      {
+        "id": "6e3f7c18-ac8a-4378-bdcd-3af2b0c75d38",
+        "name": "Ручка",
+        "price": 20.15
+      }
+    ]
+  }
+]
+```
 
 
