@@ -3,6 +3,7 @@ package com.example.onlinestore.dao;
 import com.example.onlinestore.entity.Order;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.exception.ConstraintViolationException;
 
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -19,9 +20,15 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public void addOrder(Order order) {
         try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            session.persist(order);
-            session.getTransaction().commit();
+            Transaction transaction = null;
+            try {
+                transaction = session.beginTransaction();
+                session.persist(order);
+                transaction.commit();
+            } catch (Exception e) {
+                transaction.rollback();
+                System.out.println("Error: " + e);
+            }
         } catch (ConstraintViolationException e) {
             if (e.getSQLException() instanceof SQLIntegrityConstraintViolationException) {
                 throw new IllegalArgumentException("Заказ должен содержать хотя бы один продукт", e);
@@ -44,10 +51,10 @@ public class OrderDAOImpl implements OrderDAO {
     @Override
     public List<Order> getOrdersByCustomerName(String customerName) {
         try (Session session = sessionFactory.openSession()) {
-            return session.createQuery("select o FROM Order o WHERE customerName = :customerName", Order.class).setParameter("customerName", customerName).getResultList();
+            return session.createQuery("select o FROM Order o " +
+                    "WHERE lower(customerName) = lower(:customerName)", Order.class).setParameter("customerName", customerName).getResultList();
         } catch (Exception e) {
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException("Ошибка вывода заказа по имени", e);
         }
     }
 
@@ -78,6 +85,15 @@ public class OrderDAOImpl implements OrderDAO {
             if (sessionFactory.getCurrentSession().getTransaction().isActive()) {
                 sessionFactory.getCurrentSession().getTransaction().rollback();
             }
+        }
+    }
+
+    @Override
+    public List<Order> getAllOrders() {
+        try (Session session = sessionFactory.openSession()) {
+            return session.createQuery("select o FROM Order o", Order.class).getResultList();
+        } catch (Exception e) {
+            throw new RuntimeException("Ошибка вывода заказа по имени", e);
         }
     }
 }
