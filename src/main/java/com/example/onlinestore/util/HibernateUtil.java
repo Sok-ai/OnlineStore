@@ -28,9 +28,6 @@ public class HibernateUtil {
             configuration.setProperty("hibernate.connection.username", properties.getProperty("hibernate.connection.username"));
             configuration.setProperty("hibernate.connection.password", properties.getProperty("hibernate.connection.password"));
             configuration.setProperty("hibernate.dialect", properties.getProperty("hibernate.dialect"));
-            configuration.setProperty("hibernate.hbm2ddl.auto", properties.getProperty("hibernate.hbm2ddl.auto"));
-            configuration.setProperty("hibernate.show_sql", properties.getProperty("hibernate.show_sql"));
-            configuration.setProperty("hibernate.format_sql", properties.getProperty("hibernate.format_sql"));
 
             // Добавление сущностей
             configuration.addAnnotatedClass(Product.class);
