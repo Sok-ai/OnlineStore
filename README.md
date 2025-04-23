@@ -44,7 +44,7 @@
 ````
 hibernate.connection.url=jdbc:postgresql://localhost:5432/online_store
 hibernate.connection.username=postgres
-hibernate.connection.password=ваш_пароль
+hibernate.connection.password=Your_password
 ````
 
 Замените ваш_пароль на ваш пароль PostgreSQL.
